@@ -1,7 +1,7 @@
 import React from 'react'
 import FormContext from '../FormContext'
 import { Button, Form, Radio, Checkbox, Dropdown } from 'semantic-ui-react'
-export default class FormRegras extends React.Component {
+export default class FormIdade extends React.Component {
   constructor() {
     super()
     this.state = {
@@ -16,11 +16,11 @@ export default class FormRegras extends React.Component {
             <React.Fragment>
               <Form.Group>
                 <Form.Field>
-                  <label>Qual a regra que determina a anarquia?</label>
+                  <label>Você é:</label>
                   <Form.Field
                     control={Radio}
-                    name="regra"
-                    label="Ética Libertária"
+                    name="idade"
+                    label="Menor de 18 anos"
                     value="a"
                     checked={this.state.resposta === 'a'}
                     onChange={(e, { value }) => {
@@ -30,8 +30,8 @@ export default class FormRegras extends React.Component {
                   />
                   <Form.Field
                     control={Radio}
-                    name="regra"
-                    label="Lei do mais forte"
+                    name="idade"
+                    label="Maior de 18 anos"
                     value="b"
                     checked={this.state.resposta === 'b'}
                     onChange={(e, { value }) => {
@@ -41,8 +41,8 @@ export default class FormRegras extends React.Component {
                   />
                   <Form.Field
                     control={Radio}
-                    name="regra"
-                    label="Qualquer uma"
+                    name="idade"
+                    label="Prefiro não responder"
                     value="c"
                     checked={this.state.resposta === 'c'}
                     onChange={(e, { value }) => {
@@ -50,40 +50,18 @@ export default class FormRegras extends React.Component {
                     }}
                     key="3"
                   />
-                  <Form.Field
-                    control={Radio}
-                    name="regra"
-                    label="A que o mercado determinar"
-                    value="d"
-                    checked={this.state.resposta === 'd'}
-                    onChange={(e, { value }) => {
-                      this.setState({ resposta: value })
-                    }}
-                    key="4"
-                  />
-                  <Form.Field
-                    control={Radio}
-                    name="regra"
-                    label="Outra/Não sei"
-                    value="e"
-                    checked={this.state.resposta === 'e'}
-                    onChange={(e, { value }) => {
-                      this.setState({ resposta: value })
-                    }}
-                    key="5"
-                  />
                 </Form.Field>
               </Form.Group>
               <Button
-                primary
+                secondary
                 fluid
                 onClick={
                   this.state.resposta
-                    ? () => next(4, this.state.resposta)
+                    ? () => next(7, this.state.resposta)
                     : null
                 }
               >
-                Próximo
+                Enviar
               </Button>
             </React.Fragment>
           )

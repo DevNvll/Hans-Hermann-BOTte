@@ -20,6 +20,9 @@ import FormLocal from './formularios/FormLocal'
 import Estado from './formularios/FormEstado'
 import FormAnarquia from './formularios/FormAnarquia'
 import FormRegras from './formularios/FormRegras'
+import FormAborto from './formularios/FormAborto'
+import FormIdade from './formularios/FormIdade'
+import FormPI from './formularios/FormPI'
 
 const Steps = ({ step, next, enviar, handleChange }) => {
   switch (step) {
@@ -31,6 +34,12 @@ const Steps = ({ step, next, enviar, handleChange }) => {
       return <FormAnarquia />
     case 4:
       return <FormRegras />
+    case 5:
+      return <FormAborto />
+    case 6:
+      return <FormPI />
+    case 7:
+      return <FormIdade />
   }
 }
 
@@ -78,26 +87,29 @@ export default class TagsForm extends React.Component {
     }
     if (step === 2 && (text === 'a' || text === 'c')) {
       this.setState({ form: { ...this.state.form, 2: text, 3: null, 4: null } })
-      this.handleSubmit({ ...this.state.form, 2: text, 3: null, 4: null })
-      this.setState({ sent: true })
+      // this.handleSubmit({ ...this.state.form, 2: text, 3: null, 4: null })
+      // this.setState({ sent: true })
+      this.setState({ step: 5 })
       return
     }
     if (step === 3) {
       if (text === 'a') {
         this.setState({ form: { ...this.state.form, 3: 'a', 4: null } })
-        this.handleSubmit({ ...this.state.form, 3: 'a', 4: null })
-        this.setState({ sent: true })
+        // this.handleSubmit({ ...this.state.form, 3: 'a', 4: null })
+        // this.setState({ sent: true })
+        this.setState({ step: 5 })
         return
       } else if (text === 'c') {
         this.setState({ form: { ...this.state.form, 3: 'c', 4: null } })
-        this.handleSubmit({ ...this.state.form, 3: 'c', 4: null })
-        this.setState({ sent: true })
+        // this.handleSubmit({ ...this.state.form, 3: 'c', 4: null })
+        // this.setState({ sent: true })
+        this.setState({ step: 5 })
         return
       }
     }
     this.setState({ form: { ...this.state.form, [step]: text } })
-    if (step < 4) this.setState({ step: this.state.step + 1 })
-    if (step === 4) {
+    if (step < 7) this.setState({ step: this.state.step + 1 })
+    if (step === 7) {
       this.setState({ sent: true })
       this.handleSubmit({ ...this.state.form, [step]: text })
     }
@@ -109,9 +121,7 @@ export default class TagsForm extends React.Component {
           <Segment style={{ margin: '50px' }} loading={this.state.loading}>
             <FormContext.Provider
               value={{
-                handleChange: this.handleChange.bind(this),
-                next: this.handleNext.bind(this),
-                enviar: this.enviar.bind(this)
+                next: this.handleNext.bind(this)
               }}
             >
               <Form>

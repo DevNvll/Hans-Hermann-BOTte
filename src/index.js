@@ -51,22 +51,17 @@ function handleTags(member, { data }) {
   }
   if (data['2'] === 'a') {
     addRole(member, 'Estatista')
-    return
   }
   if (data['2'] === 'c') {
     addRole(member, 'Sem Especificação')
-    return
   }
   if (data['3'] === 'a') {
     addRole(member, 'Anarquista')
-    return
   }
   if (data['3'] === 'c') {
     addRole(member, 'Sem Especificação')
-    return
   }
   if (data['4'] === 'a') {
-    addRole(member, 'Anarquista')
     addRole(member, 'Libertário')
     addRole(member, 'Jusnaturalista')
   }
@@ -82,6 +77,24 @@ function handleTags(member, { data }) {
   }
   if (data['4'] === 'e') {
     addRole(member, 'Sem Especificação')
+  }
+  if (data['5'] === 'a') {
+    addRole(member, 'Pró Aborto')
+  }
+  if (data['5'] === 'b') {
+    addRole(member, 'Anti Aborto')
+  }
+  if (data['6'] === 'a') {
+    addRole(member, 'Pró PI')
+  }
+  if (data['6'] === 'b') {
+    addRole(member, 'Anti PI')
+  }
+  if (data['7'] === 'a') {
+    addRole(member, '-18')
+  }
+  if (data['7'] === 'b') {
+    addRole(member, '+18')
   }
 }
 
