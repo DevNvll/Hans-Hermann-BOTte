@@ -42,7 +42,7 @@ export default class FormAborto extends React.Component {
                   <Form.Field
                     control={Radio}
                     name="pi"
-                    label="Não sei"
+                    label="Não sei/Prefiro não responder"
                     value="c"
                     checked={this.state.resposta === 'c'}
                     onChange={(e, { value }) => {
