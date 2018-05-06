@@ -24,12 +24,6 @@ client.on('guildMemberAdd', member => {
   )
 })
 
-// client.on('message', message => {
-//   if (message.attachments) {
-//     console.log(message.attachments)
-//   }
-// })
-
 function addRole(member, role) {
   member.addRole(
     client.guilds.find('id', SERVER_ID).roles.find('name', role).id
@@ -37,65 +31,83 @@ function addRole(member, role) {
 }
 
 function removeRole(member, role) {
-  if (member.roles.find('name', role))
-    member.removeRole(
-      client.guilds.find('id', SERVER_ID).roles.find('name', role).id
-    )
+  member.removeRole(
+    client.guilds.find('id', SERVER_ID).roles.find('name', role).id
+  ).catch((err) => console.log(err))
 }
 
 function handleTags(member, { data }) {
+  //remove tag novato
   if (!member.roles.find('name', 'Novato')) return
   removeRole(member, 'Novato')
-  if (data['1'] !== null) {
-    addRole(member, '.' + data['1'])
+  //primeira pergunta. (se sabe inglês)
+  if(data['1'] === 'b') addRole(member, 'Estrangeiro') // se não
+  //pergunta sobre o estado
+  if(data['2'] === 'a') addRole(member, 'Estatista')
+  if(data['2'] === 'b' && data['6'] !== 'a' &&  data['5'] !== 'b') addRole(member, 'Anarquista')
+  if(data['2'] === 'c') addRole(member, 'Sem Especificação')
+  //estatistas
+  if(data['3'] === 'a') addRole(member, 'Socialista')
+  if(data['3'] === 'b') addRole(member, 'Minarquista')
+  if(data['3'] === 'c') addRole(member, 'Liberal Clássico')
+  if(data['3'] === 'd') addRole(member, 'Monarquista')
+  //constituições
+  if(data['4'] === 'a') addRole(member, 'Juspositivista')
+  //definição de anarquia
+  if(data['5'] === 'b') {
+    removeRole(member, 'Anarquista')
+    if(data['6'] !== 'd' && data['6'] !== 'b') addRole(member, 'Libertário')
   }
-  if (data['2'] === 'a') {
-    addRole(member, 'Estatista')
-  }
-  if (data['2'] === 'c') {
-    addRole(member, 'Sem Especificação')
-  }
-  if (data['3'] === 'a') {
-    addRole(member, 'Anarquista')
-  }
-  if (data['3'] === 'c') {
-    addRole(member, 'Sem Especificação')
-  }
-  if (data['4'] === 'a') {
-    addRole(member, 'Libertário')
+  //lei/norma
+  if(data['6'] === 'a') {
+    removeRole(member, 'Anarquista')
     addRole(member, 'Jusnaturalista')
   }
-  if (data['4'] === 'b') {
+  if(data['6'] === 'b') {
+    removeRole(member, 'Libertário')
+    addRole(member, 'Tomista')
     addRole(member, 'Anarquista')
+    addRole(member, 'Juspositivista')
   }
-  if (data['4'] === 'c') {
-    addRole(member, 'Anarquista')
+  if(data['6'] === 'c') {
+    addRole(member, 'Jusnaturalista')
+    addRole(member, 'Tradicionalista')
   }
-  if (data['4'] === 'd') {
+  if(data['6'] === 'd') {
+    removeRole(member, 'Libertário')
     addRole(member, 'Anarquista')
     addRole(member, 'Utilitarista')
   }
-  if (data['4'] === 'e') {
-    addRole(member, 'Sem Especificação')
+  if(data['6'] === 'e') {
+    addRole(member, 'Jusnaturalista')
+    addRole(member, 'Rothbardiano')
   }
-  if (data['5'] === 'a') {
-    addRole(member, 'Pró Aborto')
+  //outras incliniações
+  if(data['7'] === 'a') addRole(member, 'Individualista')
+  if(data['7'] === 'b') addRole(member, 'Mutualista')
+  if(data['7'] === 'c') addRole(member, 'Comunista')
+  if(data['7'] === 'd') addRole(member, 'Tradicionalista')
+  //perguntas complementares
+  //aborto
+  if(data['8'] === 'a') addRole(member, 'Pró Aborto')
+  if(data['8'] === 'b') addRole(member, 'Anti Aborto')
+  //PI
+  if(data['9'] === 'a') addRole(member, 'Pró PI')
+  if(data['9'] === 'b') addRole(member, 'Anti PI')
+  //finais
+  //estado/continente
+  if(!data['10'].anon) {
+    if(data['10'].estado) {
+      addRole(member, '.'+data['10'].estado)
+    }
+    if(data['10'].continente) {
+      addRole(member, '.'+data['10'].continente)
+    }
   }
-  if (data['5'] === 'b') {
-    addRole(member, 'Anti Aborto')
-  }
-  if (data['6'] === 'a') {
-    addRole(member, 'Pró PI')
-  }
-  if (data['6'] === 'b') {
-    addRole(member, 'Anti PI')
-  }
-  if (data['7'] === 'a') {
-    addRole(member, '-18')
-  }
-  if (data['7'] === 'b') {
-    addRole(member, '+18')
-  }
+  //idade
+  if(data['11'] === 'a') addRole(member, '-18')
+  if(data['11'] === 'b') addRole(member, '+18')
+
 }
 
 client.login(token)

@@ -1,7 +1,8 @@
 import React from 'react'
 import FormContext from '../FormContext'
 import { Button, Form, Radio, Checkbox, Dropdown } from 'semantic-ui-react'
-export default class FormAborto extends React.Component {
+
+export default class FormInstituicoes extends React.Component {
   constructor() {
     super()
     this.state = {
@@ -16,10 +17,12 @@ export default class FormAborto extends React.Component {
             <React.Fragment>
               <Form.Group>
                 <Form.Field>
-                  <label>Você é a favor de propriedade intelectual?</label>
+                  <label>
+                    Você acredita na veracidade e justiça de constituições?
+                  </label>
                   <Form.Field
                     control={Radio}
-                    name="pi"
+                    name="insti"
                     label="Sim"
                     value="a"
                     checked={this.state.resposta === 'a'}
@@ -30,7 +33,7 @@ export default class FormAborto extends React.Component {
                   />
                   <Form.Field
                     control={Radio}
-                    name="pi"
+                    name="insti"
                     label="Não"
                     value="b"
                     checked={this.state.resposta === 'b'}
@@ -41,8 +44,8 @@ export default class FormAborto extends React.Component {
                   />
                   <Form.Field
                     control={Radio}
-                    name="pi"
-                    label="Não sei/Prefiro não responder"
+                    name="insti"
+                    label="Não sei."
                     value="c"
                     checked={this.state.resposta === 'c'}
                     onChange={(e, { value }) => {
@@ -57,7 +60,7 @@ export default class FormAborto extends React.Component {
                 fluid
                 onClick={
                   this.state.resposta
-                    ? () => next(9, this.state.resposta)
+                    ? () => next(4, this.state.resposta)
                     : null
                 }
               >

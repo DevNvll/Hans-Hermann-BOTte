@@ -1,7 +1,8 @@
 import React from 'react'
 import FormContext from '../FormContext'
-import { Button, Form, Radio, Checkbox, Dropdown } from 'semantic-ui-react'
-export default class FormAborto extends React.Component {
+import { Button, Form, Radio, Checkbox, Dropdown, Popup } from 'semantic-ui-react'
+
+export default class EstadosForm extends React.Component {
   constructor() {
     super()
     this.state = {
@@ -16,10 +17,13 @@ export default class FormAborto extends React.Component {
             <React.Fragment>
               <Form.Group>
                 <Form.Field>
-                  <label>Você é a favor de propriedade intelectual?</label>
+                  <label>
+                    Você entende/fala português? / Do you understand/speak
+                    brazilian portuguese?
+                  </label>
                   <Form.Field
                     control={Radio}
-                    name="pi"
+                    name="lingua"
                     label="Sim"
                     value="a"
                     checked={this.state.resposta === 'a'}
@@ -28,27 +32,22 @@ export default class FormAborto extends React.Component {
                     }}
                     key="1"
                   />
-                  <Form.Field
-                    control={Radio}
-                    name="pi"
-                    label="Não"
-                    value="b"
-                    checked={this.state.resposta === 'b'}
-                    onChange={(e, { value }) => {
-                      this.setState({ resposta: value })
-                    }}
-                    key="2"
-                  />
-                  <Form.Field
-                    control={Radio}
-                    name="pi"
-                    label="Não sei/Prefiro não responder"
-                    value="c"
-                    checked={this.state.resposta === 'c'}
-                    onChange={(e, { value }) => {
-                      this.setState({ resposta: value })
-                    }}
-                    key="3"
+                  <Popup
+                    trigger={
+                      <Form.Field
+                        control={Radio}
+                        name="lingua"
+                        label="Não"
+                        value="b"
+                        checked={this.state.resposta === 'b'}
+                        onChange={(e, { value }) => {
+                          this.setState({ resposta: value })
+                        }}
+                        key="2"
+                      />
+                    }
+                    content="Send a message to the server staff for us to applicate your tags in a adequate way."
+                    position="center right"
                   />
                 </Form.Field>
               </Form.Group>
@@ -57,7 +56,7 @@ export default class FormAborto extends React.Component {
                 fluid
                 onClick={
                   this.state.resposta
-                    ? () => next(9, this.state.resposta)
+                    ? () => next(1, this.state.resposta)
                     : null
                 }
               >

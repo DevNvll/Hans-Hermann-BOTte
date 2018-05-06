@@ -57,7 +57,7 @@ export default class FormAborto extends React.Component {
                 fluid
                 onClick={
                   this.state.resposta
-                    ? () => next(5, this.state.resposta)
+                    ? () => next(8, this.state.resposta)
                     : null
                 }
               >

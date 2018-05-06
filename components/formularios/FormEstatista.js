@@ -1,7 +1,8 @@
 import React from 'react'
 import FormContext from '../FormContext'
 import { Button, Form, Radio, Checkbox, Dropdown } from 'semantic-ui-react'
-export default class FormRegras extends React.Component {
+
+export default class EstadoLegitimo extends React.Component {
   constructor() {
     super()
     this.state = {
@@ -16,11 +17,11 @@ export default class FormRegras extends React.Component {
             <React.Fragment>
               <Form.Group>
                 <Form.Field>
-                  <label>Qual a regra que determina a anarquia?</label>
+                  <label>Qual é a definição correta de estado?</label>
                   <Form.Field
                     control={Radio}
-                    name="regra"
-                    label="Ética Libertária"
+                    name="estatista"
+                    label="Uma instituição que controla os meios de produção e de distribuição, mediante a supressão da propriedade privada e das classes sociais.."
                     value="a"
                     checked={this.state.resposta === 'a'}
                     onChange={(e, { value }) => {
@@ -30,8 +31,8 @@ export default class FormRegras extends React.Component {
                   />
                   <Form.Field
                     control={Radio}
-                    name="regra"
-                    label="Lei do mais forte"
+                    name="estado"
+                    label="Uma instituição que financia e administra apenas um número bem reduzido de coisas; coisas essenciais, que não podem ser desempenhadas pelo setor privado."
                     value="b"
                     checked={this.state.resposta === 'b'}
                     onChange={(e, { value }) => {
@@ -41,8 +42,8 @@ export default class FormRegras extends React.Component {
                   />
                   <Form.Field
                     control={Radio}
-                    name="regra"
-                    label="Qualquer uma"
+                    name="estatista"
+                    label="Uma instituição que aplica o liberalismo laissez-faire, defende a liberdade individual, e limita seu poder pelo império da lei."
                     value="c"
                     checked={this.state.resposta === 'c'}
                     onChange={(e, { value }) => {
@@ -52,8 +53,8 @@ export default class FormRegras extends React.Component {
                   />
                   <Form.Field
                     control={Radio}
-                    name="regra"
-                    label="A que o mercado determinar"
+                    name="estatista"
+                    label="Uma instituição em que o chefe tem o título de rei ou rainha (ou seus equivalentes)."
                     value="d"
                     checked={this.state.resposta === 'd'}
                     onChange={(e, { value }) => {
@@ -63,8 +64,8 @@ export default class FormRegras extends React.Component {
                   />
                   <Form.Field
                     control={Radio}
-                    name="regra"
-                    label="Outra/Não sei"
+                    name="estatista"
+                    label="Nenhuma das alternativas anteriores. / Não sei."
                     value="e"
                     checked={this.state.resposta === 'e'}
                     onChange={(e, { value }) => {
@@ -79,7 +80,7 @@ export default class FormRegras extends React.Component {
                 fluid
                 onClick={
                   this.state.resposta
-                    ? () => next(4, this.state.resposta)
+                    ? () => next(3, this.state.resposta)
                     : null
                 }
               >

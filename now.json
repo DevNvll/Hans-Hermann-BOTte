@@ -1,4 +1,4 @@
 {
   "alias": "fraternidade-hoppeana.now.sh",
-  "dotenv": true
+  "dotenv": ".env.production"
 }

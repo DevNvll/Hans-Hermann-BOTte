@@ -1,7 +1,7 @@
 import React from 'react'
 import FormContext from '../FormContext'
 import { Button, Form, Radio, Checkbox, Dropdown } from 'semantic-ui-react'
-export default class FormIdade extends React.Component {
+export default class extends React.Component {
   constructor() {
     super()
     this.state = {
@@ -11,16 +11,16 @@ export default class FormIdade extends React.Component {
   render() {
     return (
       <FormContext.Consumer>
-        {({ next }) => {
+        {({ next, estrangeiro }) => {
           return (
             <React.Fragment>
               <Form.Group>
                 <Form.Field>
-                  <label>Você é:</label>
+                  <label>Você é / You are:</label>
                   <Form.Field
                     control={Radio}
                     name="idade"
-                    label="Menor de 18 anos"
+                    label="Menor de 18 anos / Below 18"
                     value="a"
                     checked={this.state.resposta === 'a'}
                     onChange={(e, { value }) => {
@@ -31,7 +31,7 @@ export default class FormIdade extends React.Component {
                   <Form.Field
                     control={Radio}
                     name="idade"
-                    label="Maior de 18 anos"
+                    label="Maior de 18 anos / Above 18"
                     value="b"
                     checked={this.state.resposta === 'b'}
                     onChange={(e, { value }) => {
@@ -42,7 +42,7 @@ export default class FormIdade extends React.Component {
                   <Form.Field
                     control={Radio}
                     name="idade"
-                    label="Prefiro não responder"
+                    label="Prefiro não responder / I'd rather not answer"
                     value="c"
                     checked={this.state.resposta === 'c'}
                     onChange={(e, { value }) => {
@@ -57,7 +57,7 @@ export default class FormIdade extends React.Component {
                 fluid
                 onClick={
                   this.state.resposta
-                    ? () => next(7, this.state.resposta)
+                    ? () => next(11, this.state.resposta)
                     : null
                 }
               >

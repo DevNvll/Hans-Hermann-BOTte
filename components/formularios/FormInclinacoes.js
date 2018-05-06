@@ -1,7 +1,7 @@
 import React from 'react'
 import FormContext from '../FormContext'
 import { Button, Form, Radio, Checkbox, Dropdown } from 'semantic-ui-react'
-export default class FormAborto extends React.Component {
+export default class extends React.Component {
   constructor() {
     super()
     this.state = {
@@ -16,11 +16,11 @@ export default class FormAborto extends React.Component {
             <React.Fragment>
               <Form.Group>
                 <Form.Field>
-                  <label>Você é a favor de propriedade intelectual?</label>
+                  <label>Você se consideraria:</label>
                   <Form.Field
                     control={Radio}
-                    name="pi"
-                    label="Sim"
+                    name="consideracao"
+                    label="Individualista / Egoísta (Stirniano)"
                     value="a"
                     checked={this.state.resposta === 'a'}
                     onChange={(e, { value }) => {
@@ -30,8 +30,8 @@ export default class FormAborto extends React.Component {
                   />
                   <Form.Field
                     control={Radio}
-                    name="pi"
-                    label="Não"
+                    name="consideracao"
+                    label="Mutualista (Proudoniano)"
                     value="b"
                     checked={this.state.resposta === 'b'}
                     onChange={(e, { value }) => {
@@ -41,14 +41,36 @@ export default class FormAborto extends React.Component {
                   />
                   <Form.Field
                     control={Radio}
-                    name="pi"
-                    label="Não sei/Prefiro não responder"
+                    name="consideracao"
+                    label="Comunista (Bakuniano/Kropotkiniano)"
                     value="c"
                     checked={this.state.resposta === 'c'}
                     onChange={(e, { value }) => {
                       this.setState({ resposta: value })
                     }}
                     key="3"
+                  />
+                  <Form.Field
+                    control={Radio}
+                    name="consideracao"
+                    label="Tradicionalista"
+                    value="d"
+                    checked={this.state.resposta === 'd'}
+                    onChange={(e, { value }) => {
+                      this.setState({ resposta: value })
+                    }}
+                    key="4"
+                  />
+                  <Form.Field
+                    control={Radio}
+                    name="consideracao"
+                    label="Nenhuma das alternativas anteriores. / Não sei."
+                    value="e"
+                    checked={this.state.resposta === 'e'}
+                    onChange={(e, { value }) => {
+                      this.setState({ resposta: value })
+                    }}
+                    key="5"
                   />
                 </Form.Field>
               </Form.Group>
@@ -57,7 +79,7 @@ export default class FormAborto extends React.Component {
                 fluid
                 onClick={
                   this.state.resposta
-                    ? () => next(9, this.state.resposta)
+                    ? () => next(7, this.state.resposta)
                     : null
                 }
               >

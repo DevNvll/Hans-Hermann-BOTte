@@ -16,11 +16,11 @@ export default class EstadoLegitimo extends React.Component {
             <React.Fragment>
               <Form.Group>
                 <Form.Field>
-                  <label>O Estado é legítimo?</label>
+                  <label>O Estado é:</label>
                   <Form.Field
                     control={Radio}
                     name="estado"
-                    label="Sim"
+                    label="Uma instituição legítima, que se for bem administrada, fará um bem imenso à sociedade."
                     value="a"
                     checked={this.state.resposta === 'a'}
                     onChange={(e, { value }) => {
@@ -31,7 +31,7 @@ export default class EstadoLegitimo extends React.Component {
                   <Form.Field
                     control={Radio}
                     name="estado"
-                    label="Não"
+                    label="Uma instituição ilegítima, cujo objetivo é somente expoliar indivíduos pacíficos e domá-los para acharem que precisam dele para haver sociedade."
                     value="b"
                     checked={this.state.resposta === 'b'}
                     onChange={(e, { value }) => {
@@ -42,7 +42,7 @@ export default class EstadoLegitimo extends React.Component {
                   <Form.Field
                     control={Radio}
                     name="estado"
-                    label="Não sei"
+                    label="Nenhuma das alternativas anteriores. / Não sei."
                     value="c"
                     checked={this.state.resposta === 'c'}
                     onChange={(e, { value }) => {
