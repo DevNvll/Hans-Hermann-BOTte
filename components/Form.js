@@ -122,46 +122,14 @@ export default class TagsForm extends React.Component {
         return
       }
     }
+    if(step === 6 && resp !== 'f') {
+      this.setState({ step: 8 })
+      return
+    }
     if(step === 11) {
       this.handleSubmit({...this.state.form, [step]: resp})
       this.setState({sent: true})
     }
-    // if (step === 1) {
-    //   if (!text.estrangeiro) {
-    //     this.setState({ form: { ...this.state.form, 1: text.estado } })
-    //   } else {
-    //     this.setState({ form: { ...this.state.form, 1: null } })
-    //   }
-    //   this.setState({ step: this.state.step + 1 })
-    //   return
-    // }
-    // if (step === 2 && (text === 'a' || text === 'c')) {
-    //   this.setState({ form: { ...this.state.form, 2: text, 3: null, 4: null } })
-    //   // this.handleSubmit({ ...this.state.form, 2: text, 3: null, 4: null })
-    //   // this.setState({ sent: true })
-    //   this.setState({ step: 5 })
-    //   return
-    // }
-    // if (step === 3) {
-    //   if (text === 'a') {
-    //     this.setState({ form: { ...this.state.form, 3: 'a', 4: null } })
-    //     // this.handleSubmit({ ...this.state.form, 3: 'a', 4: null })
-    //     // this.setState({ sent: true })
-    //     this.setState({ step: 5 })
-    //     return
-    //   } else if (text === 'c') {
-    //     this.setState({ form: { ...this.state.form, 3: 'c', 4: null } })
-    //     // this.handleSubmit({ ...this.state.form, 3: 'c', 4: null })
-    //     // this.setState({ sent: true })
-    //     this.setState({ step: 5 })
-    //     return
-    //   }
-    // }
-    // this.setState({ form: { ...this.state.form, [step]: text } })
-    // if (step === 7) {
-    //   this.setState({ sent: true })
-    //   this.handleSubmit({ ...this.state.form, [step]: text })
-    // }
     if (step < 11) this.setState({ step: this.state.step + 1 })
   }
   render() {

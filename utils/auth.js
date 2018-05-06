@@ -1,5 +1,7 @@
 import axios from 'axios'
 
+const SERVER_ID = process.env.SERVER_ID
+
 export function setToken(token, refresh) {
   localStorage.setItem('token', token)
   localStorage.setItem('refresh', refresh)
@@ -49,7 +51,7 @@ export async function checkMembership() {
     })
       .then(({ data }) => {
         for (let server of data) {
-          if (server.id === '363403060652802058') {
+          if (server.id === SERVER_ID) {
             resolve(true)
             return
           }

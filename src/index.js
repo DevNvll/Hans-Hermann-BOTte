@@ -12,6 +12,7 @@ const client = new Discord.Client()
 const SERVER_ID = process.env.SERVER_ID
 const CLIENT_ID = process.env.CLIENT_ID
 const CLIENT_SECRET = process.env.CLIENT_SECRET
+const SITE_URL = process.env.SITE_URL
 const token = process.env.TOKEN
 
 client.on('ready', () => {
@@ -133,7 +134,7 @@ nextApp.prepare().then(() => {
         grant_type: 'authorization_code',
         code: req.query.code || req.body.code || req.params.code,
         redirect_uri: process.env.NOW_URL
-          ? 'https://fraternidade-hoppeana.now.sh/callback'
+          ? SITE_URL+"/callback"
           : 'http://localhost:3000/callback'
       }),
       headers: { 'content-type': 'application/x-www-form-urlencoded' }
@@ -143,7 +144,7 @@ nextApp.prepare().then(() => {
         res.redirect(
           301,
           process.env.NOW_URL
-            ? 'https://fraternidade-hoppeana.now.sh' +
+            ? SITE_URL +
               '/?code=' +
               access_token +
               '&refresh=' +
@@ -170,7 +171,7 @@ nextApp.prepare().then(() => {
         grant_type: 'refresh_token',
         refresh_token: req.body.refresh_token,
         redirect_uri: process.env.NOW_URL
-          ? 'https://fraternidade-hoppeana.now.sh' + '/callback'
+          ? SITE_URL + '/callback'
           : 'http://localhost:3000/callback'
       }),
       headers: { 'content-type': 'application/x-www-form-urlencoded' }

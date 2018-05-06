@@ -18,6 +18,7 @@ export default class extends Document {
             href="https://use.fontawesome.com/releases/v5.0.8/css/all.css"
             rel="stylesheet"
           />
+          <link rel='shortcut icon' type='image/x-icon' href='/static/favicon.ico' />
         </Head>
 
         <body>

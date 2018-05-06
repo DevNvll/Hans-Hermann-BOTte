@@ -47,7 +47,7 @@ export default class EstadosForm extends React.Component {
                       />
                     }
                     content="Send a message to the server staff for us to applicate your tags in a adequate way."
-                    position="center right"
+                    position="right center"
                   />
                 </Form.Field>
               </Form.Group>

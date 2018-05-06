@@ -25,6 +25,8 @@ import {
 import Profile from '../components/Profile'
 import Form from '../components/Form'
 
+const SITE_URL = process.env.NOW_URL ? process.env.SITE_URL : 'http://localhost:3000'
+
 function getUrlParams(search) {
   let hashes = search.slice(search.indexOf('?') + 1).split('&')
   return hashes.reduce((params, hash) => {
@@ -61,12 +63,6 @@ export default class Index extends React.Component {
 
   componentDidMount() {
     document.title = 'Fraternidade Hoppeana'
-    const authurl = process.env.NOW_URL
-      ? 'https://discordapp.com/api/oauth2/authorize?client_id=441321755206877196&redirect_uri=https://fraternidade-hoppeana.now.sh/callback' +
-        '&response_type=code&scope=identify%20guilds'
-      : 'https://discordapp.com/api/oauth2/authorize?client_id=441321755206877196&redirect_uri=http://localhost:3000/callback' +
-        '&response_type=code&scope=identify%20guilds'
-    this.setState({ url: authurl })
     const { code, refresh } = getUrlParams(window.location.search)
     const token = getToken()
     if (code && refresh) {
@@ -144,7 +140,8 @@ export default class Index extends React.Component {
               <Image src="/static/fh.png" size="large" />
               <h1>Fraternidade Hoppeana</h1>
             </center>
-            <a href={this.state.url}>
+            <a href={'https://discordapp.com/api/oauth2/authorize?client_id=441321755206877196&redirect_uri='+SITE_URL+'/callback' +
+            '&response_type=code&scope=identify%20guilds'}>
               <Button color="blue" size="massive">
                 Entrar com o Discord
               </Button>
