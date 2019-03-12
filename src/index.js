@@ -52,7 +52,7 @@ nextApp.prepare().then(() => {
       },
       resave: false,
       saveUninitialized: false,
-      secret: 'um4br4ç0procl4n',
+      secret: process.env.SESSION_SECRET,
       unset: 'destroy'
     })
   )
