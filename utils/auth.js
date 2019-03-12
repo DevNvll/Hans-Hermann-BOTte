@@ -25,28 +25,28 @@ export function getToken() {
   return localStorage.getItem('token')
 }
 
-export function getInfo() {
+export function getInfo(token) {
   return axios({
     method: 'GET',
     url: `https://discordapp.com/api/v6/users/@me`,
     headers: {
-      Authorization: 'Bearer ' + getToken()
+      Authorization: 'Bearer ' + token
     }
   })
 }
 
-export function logout() {
-  localStorage.removeItem('token')
-  localStorage.removeItem('refresh')
+export async function logout() {
+  await axios.post('/logout')
+  window.location.href = '/'
 }
 
-export async function checkMembership() {
+export async function checkMembership(token) {
   return new Promise(resolve => {
     axios({
       method: 'GET',
       url: `https://discordapp.com/api/v6/users/@me/guilds`,
       headers: {
-        Authorization: 'Bearer ' + getToken()
+        Authorization: 'Bearer ' + token
       }
     })
       .then(({ data }) => {
@@ -62,13 +62,13 @@ export async function checkMembership() {
   })
 }
 
-export function checkRole(userid) {
+export function checkRole(userid, url) {
   return new Promise(resolve => {
     axios({
       method: 'GET',
-      url: `/isPending/` + userid
+      url: `${url}/isPending/${userid}`
     })
-      .then(data => {
+      .then(({ data }) => {
         resolve(data)
       })
       .catch(err => console.log(err))

@@ -1,5 +1,4 @@
 import React from 'react'
-import url from 'url'
 import axios from 'axios'
 import {
   Image,
@@ -25,15 +24,9 @@ import {
 import Profile from '../components/Profile'
 import Form from '../components/Form'
 
-const SITE_URL = process.env.NOW_URL ? process.env.SITE_URL : 'http://localhost:3000'
-
-function getUrlParams(search) {
-  let hashes = search.slice(search.indexOf('?') + 1).split('&')
-  return hashes.reduce((params, hash) => {
-    let [key, val] = hash.split('=')
-    return Object.assign(params, { [key]: decodeURIComponent(val) })
-  }, {})
-}
+const SITE_URL = process.env.NOW_URL
+  ? process.env.SITE_URL
+  : 'http://localhost:3000'
 
 const NotMember = () => {
   return (
@@ -51,60 +44,43 @@ const NotMember = () => {
 }
 
 export default class Index extends React.Component {
-  constructor() {
-    super()
-    this.state = {
-      loggedin: false,
-      member: false,
-      loading: true,
-      isPending: false
+  static async getInitialProps(ctx) {
+    if (ctx.req.session.user) {
+      const { req } = ctx
+      const protocol = req.headers['x-forwarded-proto'] || 'http'
+      const baseUrl = req ? `${protocol}://${req.headers.host}` : ''
+
+      const token = ctx.req.session.user.access_token
+      const user = await getInfo(token)
+      const membership = await checkMembership(token)
+      const hasNewbie = await checkRole(user.data.id, baseUrl)
+
+      return {
+        credentials: ctx.req.session.user,
+        user: user.data,
+        membership,
+        hasNewbie,
+        loggedin: true,
+        loading: false
+      }
+    } else {
+      return {}
     }
   }
 
   componentDidMount() {
     document.title = 'Fraternidade Hoppeana'
-    const { code, refresh } = getUrlParams(window.location.search)
-    const token = getToken()
-    if (code && refresh) {
-      localStorage.setItem('token', code)
-      localStorage.setItem('refresh', refresh)
-      this.setState({ loggedin: true })
-      this.loadInfo()
+    if (this.props.credentials) {
       history.replaceState({}, 'Fraternidade Hoppeana - Tags', '/')
-    } else if (token) {
-      this.setState({ loggedin: true })
-      this.loadInfo()
-    } else {
-      this.setState({ loading: false })
     }
   }
-  loadInfo() {
-    getInfo()
-      .then(({ data }) => {
-        this.setState({ user: data })
-        document.title =
-          'FH - Tags - ' + data.username + '#' + data.discriminator
-        checkMembership().then(result => {
-          if (result) {
-            this.setState({ member: true })
-            checkRole(data.id).then(pending => {
-              this.setState({ isPending: pending.data })
-              this.setState({ loading: false })
-            })
-          } else {
-            this.setState({ loading: false })
-          }
-        })
-      })
-      .catch(err => console.log(err))
-  }
-  onLogout() {
-    logout()
-    this.setState({ loggedin: false })
+
+  async onLogout() {
+    await logout()
     document.title = 'Fraternidade Hoppeana'
   }
   render() {
-    if (this.state.loading) {
+    if (this.props.loading) {
       return (
         <Dimmer active>
           <Loader inverted size="big">
@@ -115,33 +91,38 @@ export default class Index extends React.Component {
     }
     return (
       <Container>
-        {(this.state.loggedin &&
-          this.state.user && (
-            <React.Fragment>
-              <Profile
-                avatar={`https://cdn.discordapp.com/avatars/${
-                  this.state.user.id
-                }/${this.state.user.avatar}.png`}
-                username={
-                  this.state.user.username + '#' + this.state.user.discriminator
-                }
-                onLogout={this.onLogout.bind(this)}
+        {(this.props.loggedin && this.props.user && (
+          <React.Fragment>
+            <Profile
+              avatar={`https://cdn.discordapp.com/avatars/${
+                this.props.user.id
+              }/${this.props.user.avatar}.png`}
+              username={
+                this.props.user.username + '#' + this.props.user.discriminator
+              }
+              onLogout={this.onLogout.bind(this)}
+            />
+            {(this.props.membership && (
+              <Form
+                userid={this.props.user.id}
+                pending={this.props.hasNewbie}
               />
-              {(this.state.member && (
-                <Form
-                  userid={this.state.user.id}
-                  pending={this.state.isPending}
-                />
-              )) || <NotMember />}
-            </React.Fragment>
-          )) || (
+            )) || <NotMember />}
+          </React.Fragment>
+        )) || (
           <div className="login">
             <center>
               <Image src="/static/fh.png" size="large" />
               <h1>Fraternidade Hoppeana</h1>
             </center>
-            <a href={'https://discordapp.com/api/oauth2/authorize?client_id=441321755206877196&redirect_uri='+SITE_URL+'/callback' +
-            '&response_type=code&scope=identify%20guilds'}>
+            <a
+              href={
+                'https://discordapp.com/api/oauth2/authorize?client_id=441321755206877196&redirect_uri=' +
+                SITE_URL +
+                '/callback' +
+                '&response_type=code&scope=identify%20guilds'
+              }
+            >
               <Button color="blue" size="massive">
                 Entrar com o Discord
               </Button>
